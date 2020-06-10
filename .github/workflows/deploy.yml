@@ -41,8 +41,8 @@ jobs:
       - name: Build the application
         run: mvn -e -Dspring.profiles.active=production verify deploy
 
-      - name: Deploy to Cloud Foundry
-        run: |
-          cd $GITHUB_WORKSPACE
-          ./deploy/cf.sh
-          ./deploy/deploy.sh
+#       - name: Deploy to Cloud Foundry
+#         run: |
+#           cd $GITHUB_WORKSPACE
+#           ./deploy/cf.sh
+#           ./deploy/deploy.sh
