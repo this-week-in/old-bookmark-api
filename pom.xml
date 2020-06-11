@@ -10,7 +10,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>example</groupId>
-    <artifactId>editor-api</artifactId>
+    <artifactId>bookmark-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <properties>
         <spring-cloud.version>Hoxton.SR5</spring-cloud.version>
