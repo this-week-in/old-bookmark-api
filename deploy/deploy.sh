@@ -3,8 +3,9 @@
 source "$(cd $(dirname $0) && pwd)/env.sh"
 
 export APP_NAME=editor-api
-export CF_APP_NAME=ttd-${APP_NAME}
-export CF_DB_SVC_NAME=ttd-db
+export TWI_PREFIX=${TWI_PREFIX:-twi}
+export CF_APP_NAME=${TWI_PREFIX}-${APP_NAME}
+export CF_DB_SVC_NAME=${TWI_PREFIX}-db
 
 cf push --no-start -p target/bookmark-api.jar ${CF_APP_NAME}
 cf bs $CF_APP_NAME $CF_DB_SVC_NAME
