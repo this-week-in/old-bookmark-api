@@ -2,7 +2,7 @@
 
 source "$(cd $(dirname $0) && pwd)/env.sh"
 
-export APP_NAME=editor-api
+export APP_NAME=bookmark-api
 export TWI_PREFIX=${TWI_PREFIX:-twi}
 export CF_APP_NAME=${TWI_PREFIX}-${APP_NAME}
 export CF_DB_SVC_NAME=${TWI_PREFIX}-db
