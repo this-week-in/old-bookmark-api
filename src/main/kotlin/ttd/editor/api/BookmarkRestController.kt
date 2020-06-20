@@ -85,7 +85,7 @@ class BookmarkRestController(
         "extended" to it.extended,
         "hash" to it.hash,
         "tags" to it.tags,
-        "time" to it.time?.time,
+        "time" to it.time.time,
         "edited" to it.edited
     )
   }

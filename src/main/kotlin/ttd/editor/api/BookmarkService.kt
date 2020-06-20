@@ -13,7 +13,6 @@ import java.time.ZoneOffset
 import java.util.*
 
 
-// TODO move to TestContainers and some seed-data to make sure this is always consistent
 @Service
 @Transactional
 class BookmarkService(private val databaseClient: DatabaseClient) {
@@ -53,10 +52,10 @@ class BookmarkService(private val databaseClient: DatabaseClient) {
     if (log.isDebugEnabled) {
       log.debug("""
         =========
-        ${query} 
-        ${startDate} 
-        ${stopDate} 
-        ${errors} 
+        $query 
+        $startDate 
+        $stopDate 
+        $errors 
         """.trimIndent())
     }
 
