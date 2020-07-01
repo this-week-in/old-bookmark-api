@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.node.JsonNodeType
 import com.fasterxml.jackson.databind.node.TextNode
 import org.apache.commons.logging.LogFactory
 import org.reactivestreams.Publisher
+import org.springframework.core.io.ByteArrayResource
+import org.springframework.core.io.Resource
+import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -60,11 +63,7 @@ class BookmarkRestController(
         }
   }
 
-  @GetMapping("/search", produces = [MediaType.APPLICATION_JSON_VALUE])
-  fun search(@RequestParam(required = false, defaultValue = "") query: String,
-             @RequestParam(required = false, defaultValue = "0") start: Long,
-             @RequestParam(required = false, defaultValue = "0") stop: Long,
-             @RequestParam(required = false, defaultValue = "false") errors: Boolean): Flux<Map<String, *>> =
+  fun doSearch(query: String, start: Long, stop: Long, errors: Boolean): Flux<Bookmark> =
       this.bookmarkService
           .search(
               query = query,
@@ -72,6 +71,38 @@ class BookmarkRestController(
               stopDate = if (start == 0L) null else Date(stop),
               errors = errors
           )
+
+
+  @ExperimentalStdlibApi
+  @GetMapping("/export", produces = [MediaType.TEXT_MARKDOWN_VALUE])
+  fun export(@RequestParam(required = false, defaultValue = "") query: String,
+             @RequestParam(required = false, defaultValue = "0") start: Long,
+             @RequestParam(required = false, defaultValue = "0") stop: Long,
+             @RequestParam(required = false, defaultValue = "false") errors: Boolean)
+      : ResponseEntity<Publisher<Resource>> {
+
+    val search: Publisher<Resource> =
+        this.doSearch(query, start, stop, errors)
+            .map {
+              "* [${it.description}](${it.href})"
+            }
+            .collectSortedList()
+            .map { it.joinToString(System.lineSeparator()) }
+            .map { ByteArrayResource(it.encodeToByteArray()) }
+
+    return ResponseEntity
+        .ok()
+        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=markdown-export-${UUID.randomUUID()}.md")
+        .contentType(MediaType.TEXT_MARKDOWN)
+        .body(search)
+  }
+
+  @GetMapping("/search", produces = [MediaType.APPLICATION_JSON_VALUE])
+  fun search(@RequestParam(required = false, defaultValue = "") query: String,
+             @RequestParam(required = false, defaultValue = "0") start: Long,
+             @RequestParam(required = false, defaultValue = "0") stop: Long,
+             @RequestParam(required = false, defaultValue = "false") errors: Boolean): Flux<Map<String, *>> =
+      this.doSearch(query, start, stop, errors)
           .map { bookmarkToMap(it) }
 
   @GetMapping("/next", produces = [MediaType.APPLICATION_JSON_VALUE])

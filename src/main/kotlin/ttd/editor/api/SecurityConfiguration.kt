@@ -35,7 +35,11 @@ class SecurityConfiguration {
   @Bean
   fun authorization(httpSecurity: ServerHttpSecurity): SecurityWebFilterChain =
       httpSecurity
-          .authorizeExchange { ae -> ae.anyExchange().authenticated() }//
+          .authorizeExchange { ae ->
+            ae
+                .pathMatchers("/bookmarks/export").permitAll()
+                .anyExchange().authenticated()
+          }//
           .oauth2ResourceServer { x -> x.jwt() }//
           .csrf { x -> x.disable() }
           .cors(Customizer.withDefaults())
