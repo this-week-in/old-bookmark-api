@@ -7,11 +7,10 @@ TAG_NAME=${1:-$(date +%s)}
 IMAGE_TAG="production${GITHUB_SHA:-}"
 GCR_IMAGE_NAME=gcr.io/${PROJECT_ID}/${APP_NAME}
 
-
+# spring-javaformat:apply \
 #https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/#build-image
 mvn -f ${ROOT_DIR}/../../pom.xml -e -Dspring.profiles.active=production  \
   clean \
-  spring-javaformat:apply \
   verify \
   deploy \
   spring-boot:build-image
