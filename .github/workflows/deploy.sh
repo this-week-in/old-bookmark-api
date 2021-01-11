@@ -5,7 +5,7 @@ APP_NAME=bookmark-api
 PROJECT_ID=${GCLOUD_PROJECT}
 TAG_NAME=${1:-$(date +%s)}
 IMAGE_TAG="production${GITHUB_SHA:-}"
-GCR_IMAGE_NAME=gcr.io/${PROJECT_ID}/${APP_NAME}
+GCR_IMAGE_NAME=gcr.io/${PROJECT_ID}/twi-${APP_NAME}
 
 # spring-javaformat:apply \
 #https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/#build-image
