@@ -1,13 +1,14 @@
 #!/usr/bin/env bash 
+
+ROOT_DIR=$(cd $(dirname $0) && pwd)
+APP_NAME=bookmark-api
 PROJECT_ID=${GCLOUD_PROJECT}
 TAG_NAME=${1:-$(date +%s)}
 IMAGE_TAG="production${GITHUB_SHA:-}"
 GCR_IMAGE_NAME=gcr.io/${PROJECT_ID}/${APP_NAME}
 
-ROOT_DIR=$(cd $(dirname $0) && pwd)
-APP_NAME=bookmark-api
 
-
+#https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/#build-image
 mvn -f ${ROOT_DIR}/../../pom.xml -e -Dspring.profiles.active=production  \
   clean \
   spring-javaformat:apply \
