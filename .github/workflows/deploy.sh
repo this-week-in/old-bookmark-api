@@ -9,7 +9,8 @@ GCR_IMAGE_NAME=gcr.io/${PROJECT_ID}/${APP_NAME}
 
 # spring-javaformat:apply \
 #https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/#build-image
-mvn -f ${ROOT_DIR}/../../pom.xml -e -Dspring.profiles.active=production  \
+mvn -f ${ROOT_DIR}/../../pom.xml -DskipTests=true \
+  -e -Dspring.profiles.active=production  \
   clean \
   verify \
   deploy \
