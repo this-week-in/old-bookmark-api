@@ -159,6 +159,13 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <!--
+                <imageName>
+                 gcr.io/bootiful/${project.artifactId}:${project.version}
+                </imageName>
+                -->
+                <configuration>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
