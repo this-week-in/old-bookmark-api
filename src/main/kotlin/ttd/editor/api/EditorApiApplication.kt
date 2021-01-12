@@ -9,9 +9,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 class EditorApiApplication
 
 fun main(args: Array<String>) {
- runApplication<EditorApiApplication>(*args)
-
-  System.getenv().forEach { (k, v) ->
-    println( "$k   ")
-  }
+    System.getenv().forEach { (k, v) -> println("$k") }
+    runApplication<EditorApiApplication>(*args)
 }
