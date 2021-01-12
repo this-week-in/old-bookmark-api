@@ -12,7 +12,6 @@ import java.time.ZoneId
 import java.time.ZoneOffset
 import java.util.*
 
-
 @Service
 @Transactional
 class BookmarkService(private val databaseClient: DatabaseClient) {
@@ -51,13 +50,15 @@ class BookmarkService(private val databaseClient: DatabaseClient) {
     fun search(query: String?, startDate: Date?, stopDate: Date?, errors: Boolean?): Flux<Bookmark> {
 
         if (log.isDebugEnabled) {
-            log.debug("""
-        =========
-        $query 
-        $startDate 
-        $stopDate 
-        $errors 
-        """.trimIndent())
+            log.debug(
+                    """
+                =========
+                $query 
+                $startDate 
+                $stopDate 
+                $errors 
+            """.trimIndent()
+            )
         }
 
         data class Predicate(
@@ -66,9 +67,8 @@ class BookmarkService(private val databaseClient: DatabaseClient) {
         )
 
         val sql = """
-      select * from bookmark where deleted = false 
-    """
-
+            select * from bookmark where deleted = false 
+        """
         var bindCtr = 1
 
         val predicates = mutableListOf<Predicate>()
@@ -99,7 +99,7 @@ class BookmarkService(private val databaseClient: DatabaseClient) {
             log.debug(finishedSqlQuery)
         }
 
-        var querySpec:  DatabaseClient.GenericExecuteSpec = databaseClient.sql(finishedSqlQuery)
+        var querySpec: DatabaseClient.GenericExecuteSpec = databaseClient.sql(finishedSqlQuery)
         predicates.forEach {
             it.params.forEach { (k, v) ->
                 querySpec = querySpec.bind(k, v)
