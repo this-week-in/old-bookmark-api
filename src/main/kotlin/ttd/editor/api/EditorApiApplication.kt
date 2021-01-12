@@ -2,6 +2,7 @@ package ttd.editor.api
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.r2dbc.core.DatabaseClient
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
 @SpringBootApplication
@@ -9,6 +10,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 class EditorApiApplication
 
 fun main(args: Array<String>) {
-    System.getenv().forEach { (k, v) -> println("$k") }
+    System.getenv().forEach { (k, v) -> println(k) }
     runApplication<EditorApiApplication>(*args)
 }

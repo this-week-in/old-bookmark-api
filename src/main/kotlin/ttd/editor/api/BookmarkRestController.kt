@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.JsonNodeType
 import com.fasterxml.jackson.databind.node.TextNode
-import org.apache.commons.logging.LogFactory
 import org.reactivestreams.Publisher
 import org.springframework.core.io.ByteArrayResource
 import org.springframework.core.io.Resource
@@ -22,7 +21,6 @@ class BookmarkRestController(
     private val objectMapper: ObjectMapper,
     private val bookmarkService: BookmarkService) {
 
-  private val log = LogFactory.getLog(javaClass)
 
   @DeleteMapping(path = ["/{bookmarkId}"])
   fun delete(@PathVariable bookmarkId: Int): Publisher<ResponseEntity<Any>> {

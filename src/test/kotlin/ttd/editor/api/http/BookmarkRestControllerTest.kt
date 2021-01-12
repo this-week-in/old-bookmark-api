@@ -16,10 +16,10 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.PropertySource
 import org.springframework.core.env.Environment
-import org.springframework.data.r2dbc.connectionfactory.R2dbcTransactionManager
-import org.springframework.data.r2dbc.core.DatabaseClient
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
+import org.springframework.r2dbc.connection.R2dbcTransactionManager
+import org.springframework.r2dbc.core.DatabaseClient
 import org.springframework.security.config.Customizer
 import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.core.userdetails.MapReactiveUserDetailsService
@@ -224,8 +224,8 @@ class TestConfig {
         url = " r2dbc:postgres://localhost/ttd ".trim()
       }
 
-  @Bean
-  fun r2dcTransactionManager(cf: ConnectionFactory) = R2dbcTransactionManager(cf)
+//  @Bean
+//  fun r2dcTransactionManager(cf: ConnectionFactory) = R2dbcTransactionManager(cf)
 
   @Bean
   fun connectionFactory(r2dbcProperties: R2dbcProperties) = ConnectionFactoryBuilder

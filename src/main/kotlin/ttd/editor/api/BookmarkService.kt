@@ -1,7 +1,7 @@
 package ttd.editor.api
 
 import org.apache.commons.logging.LogFactory
-import org.springframework.data.r2dbc.core.DatabaseClient
+import org.springframework.r2dbc.core.DatabaseClient
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.util.StringUtils
@@ -41,7 +41,7 @@ class BookmarkService(private val databaseClient: DatabaseClient) {
 
     fun count(): Mono<Long> =
             this.databaseClient
-                    .execute("select count(*) as count_of_records from bookmark where edited is null and deleted = false ")
+                    .sql("select count(*) as count_of_records from bookmark where edited is null and deleted = false ")
                     .fetch()
                     .one()
                     .map {
@@ -93,15 +93,13 @@ class BookmarkService(private val databaseClient: DatabaseClient) {
         predicates.forEach {
             stringBuilder.append(it.clause)
         }
-//    stringBuilder.append(" limit 100 ")
 
         val finishedSqlQuery = stringBuilder.toString()
         if (log.isDebugEnabled) {
             log.debug(finishedSqlQuery)
         }
 
-        var querySpec: DatabaseClient.GenericExecuteSpec =
-                databaseClient.execute(finishedSqlQuery)
+        var querySpec:  DatabaseClient.GenericExecuteSpec = databaseClient.sql(finishedSqlQuery)
         predicates.forEach {
             it.params.forEach { (k, v) ->
                 querySpec = querySpec.bind(k, v)
@@ -113,7 +111,7 @@ class BookmarkService(private val databaseClient: DatabaseClient) {
 
     fun delete(bookmarkId: Int): Mono<Boolean> {
         return databaseClient
-                .execute("update bookmark set deleted = true where bookmark_id = $1")
+                .sql("update bookmark set deleted = true where bookmark_id = $1")
                 .bind("$1", bookmarkId)
                 .fetch()
                 .rowsUpdated()
@@ -122,7 +120,7 @@ class BookmarkService(private val databaseClient: DatabaseClient) {
 
     fun update(bookmarkId: Int, href: String, description: String, tags: Array<String>): Mono<Bookmark> =
             this.databaseClient
-                    .execute(" update bookmark set description = $1, href = $2, tags = $3, edited = NOW() where bookmark_id = $4 ")
+                    .sql(" update bookmark set description = $1, href = $2, tags = $3, edited = NOW() where bookmark_id = $4 ")
                     .bind("$1", description)
                     .bind("$2", href)
                     .bind("$3", tags)
@@ -134,7 +132,7 @@ class BookmarkService(private val databaseClient: DatabaseClient) {
                     .filter { count -> count > 0 }
                     .flatMapMany {
                         this.databaseClient
-                                .execute("select * from bookmark where href = $1 limit 1")
+                                .sql("select * from bookmark where href = $1 limit 1")
                                 .bind("$1", href)
                                 .fetch()
                                 .first()
@@ -143,7 +141,7 @@ class BookmarkService(private val databaseClient: DatabaseClient) {
                     .single()
 
     fun next(): Mono<Bookmark> = databaseClient
-            .execute(" select * from bookmark where edited is null and deleted = false order by time desc limit 1  ")
+            .sql(" select * from bookmark where edited is null and deleted = false order by time desc limit 1  ")
             .fetch()
             .one()
             .map(mapper)
