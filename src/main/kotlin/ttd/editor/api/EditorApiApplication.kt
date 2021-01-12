@@ -15,6 +15,8 @@ class EditorApiApplication {
 
     @Bean
     fun runner(bs :BookmarkService) = ApplicationListener<ApplicationReadyEvent> {
+
+        println( "Hello, world")
         bs.count().subscribe {
             println( "count $it ")
         }
