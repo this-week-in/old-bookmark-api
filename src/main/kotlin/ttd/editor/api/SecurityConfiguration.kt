@@ -2,8 +2,8 @@ package ttd.editor.api
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.data.r2dbc.core.DatabaseClient
 import org.springframework.http.HttpMethod
-import org.springframework.r2dbc.core.DatabaseClient
 import org.springframework.security.config.Customizer
 import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService

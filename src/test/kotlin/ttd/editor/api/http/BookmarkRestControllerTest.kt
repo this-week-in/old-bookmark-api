@@ -16,10 +16,9 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.PropertySource
 import org.springframework.core.env.Environment
+import org.springframework.data.r2dbc.core.DatabaseClient
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
-import org.springframework.r2dbc.connection.R2dbcTransactionManager
-import org.springframework.r2dbc.core.DatabaseClient
 import org.springframework.security.config.Customizer
 import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.core.userdetails.MapReactiveUserDetailsService

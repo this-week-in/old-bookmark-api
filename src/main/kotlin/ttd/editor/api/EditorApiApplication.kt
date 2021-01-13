@@ -6,7 +6,6 @@ import org.springframework.boot.runApplication
 import org.springframework.context.ApplicationListener
 import org.springframework.context.annotation.Bean
 import org.springframework.context.event.EventListener
-import org.springframework.r2dbc.core.DatabaseClient
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
 @SpringBootApplication
@@ -15,8 +14,6 @@ class EditorApiApplication {
 
     @Bean
     fun runner(bs :BookmarkService) = ApplicationListener<ApplicationReadyEvent> {
-
-        println( "Hello, world")
         bs.count().subscribe {
             println( "count $it ")
         }

@@ -1,6 +1,6 @@
 package ttd.editor.api
 
-import org.springframework.r2dbc.core.DatabaseClient
+import org.springframework.data.r2dbc.core.DatabaseClient
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService
@@ -22,7 +22,7 @@ class R2dbcReactiveUserDetailsService(private val dbc: DatabaseClient) : Reactiv
 
   override fun findByUsername(username: String): Mono<UserDetails> {
     return dbc
-        .sql(" select * from editor_users where username = $1 ")
+        .execute(" select * from editor_users where username = $1 ")
         .bind("$1", username)
         .fetch()
         .one()
