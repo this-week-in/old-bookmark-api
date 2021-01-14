@@ -15,34 +15,35 @@ import org.springframework.web.cors.reactive.CorsConfigurationSource
 @Configuration
 class SecurityConfiguration {
 
-  @Bean
-  fun corsConfigurationSource(): CorsConfigurationSource =
-      CorsConfigurationSource {
-        CorsConfiguration()
-            .let {
-              it.allowCredentials = true
-              it.allowedHeaders = listOf("*")
-              it.allowedOrigins = listOf("*")
-              it.allowedMethods = listOf(HttpMethod.POST, HttpMethod.OPTIONS,
-                  HttpMethod.DELETE, HttpMethod.PUT, HttpMethod.GET).map { it.toString() }
-              it
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource =
+            CorsConfigurationSource {
+                CorsConfiguration()
+                        .let {
+                            it.allowCredentials = true
+                            it.allowedHeaders = listOf("*")
+                            it.allowedOrigins = listOf("*")
+                            it.allowedMethods = listOf(HttpMethod.POST, HttpMethod.OPTIONS,
+                                    HttpMethod.DELETE, HttpMethod.PUT, HttpMethod.GET).map { it.toString() }
+                            it
+                        }
             }
-      }
 
-  @Bean
-  fun authentication(dbc: DatabaseClient): ReactiveUserDetailsService = R2dbcReactiveUserDetailsService(dbc)
+    @Bean
+    fun authentication(dbc: DatabaseClient): ReactiveUserDetailsService = R2dbcReactiveUserDetailsService(dbc)
 
-  @Bean
-  fun authorization(httpSecurity: ServerHttpSecurity): SecurityWebFilterChain =
-      httpSecurity
-          .authorizeExchange { ae ->
-            ae
-                .pathMatchers("/bookmarks/export").permitAll()
-                .anyExchange().authenticated()
-          }//
-          .oauth2ResourceServer { x -> x.jwt() }//
-          .csrf { x -> x.disable() }
-          .cors(Customizer.withDefaults())
-          .build()
+    @Bean
+    fun authorization(httpSecurity: ServerHttpSecurity): SecurityWebFilterChain =
+            httpSecurity
+                    .authorizeExchange { ae ->
+                        ae
+                                .pathMatchers("/bookmarks/export").permitAll()
+                                .pathMatchers("/actuator/**").permitAll()
+                                .anyExchange().authenticated()
+                    }//
+                    .oauth2ResourceServer { x -> x.jwt() }//
+                    .csrf { x -> x.disable() }
+                    .cors(Customizer.withDefaults())
+                    .build()
 
 }
