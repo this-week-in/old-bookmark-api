@@ -11,7 +11,7 @@
     </parent>
     <groupId>example</groupId>
     <artifactId>bookmark-api</artifactId>
-    <version>0.0.1-SNcAPSHOT</version>
+    <version>0.0.2-SNcAPSHOT</version>
     <properties>
         <java.version>11</java.version>
         <kotlin.version>1.3.72</kotlin.version>
@@ -95,7 +95,6 @@
         </dependency>
     </dependencies>
 
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -109,15 +108,16 @@
     </dependencyManagement>
 
     <build>
-        <finalName>
-            ${project.artifactId}
-        </finalName>
-        <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
-        <testSourceDirectory>${project.basedir}/src/test/kotlin
-        </testSourceDirectory>
-        <plugins>
-
-
+            <finalName>
+                ${project.artifactId}
+            </finalName>
+            <sourceDirectory>
+                ${project.basedir}/src/main/kotlin
+            </sourceDirectory>
+            <testSourceDirectory>
+                ${project.basedir}/src/test/kotlin
+            </testSourceDirectory>
+            <plugins>
             <plugin>
                 <groupId>org.jfrog.buildinfo</groupId>
                 <artifactId>artifactory-maven-plugin</artifactId>
@@ -192,8 +192,6 @@
             </plugin>
         </plugins>
     </build>
-
-
     <repositories>
         <repository>
             <snapshots>

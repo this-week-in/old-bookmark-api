@@ -1,7 +1,6 @@
-# Editor API
+# Bookmark API
 
 
-![API](https://github.com/the-trump-dump/editor-api/workflows/API/badge.svg)
+![API](https://github.com/this-week-in/bookmark-api/workflows/API/badge.svg)
 
-This project provides an editor to edit bookmarks in Pinboard.
-
+This project provides an api to manage bookmarks 

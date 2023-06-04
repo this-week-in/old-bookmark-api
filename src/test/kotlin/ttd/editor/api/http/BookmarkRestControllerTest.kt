@@ -127,23 +127,6 @@ class BookmarkRestControllerTest(@Autowired private val webTestClient: WebTestCl
         .expectStatus().isNotFound()
   }
 
-/*
-  @Test
-  fun count() {
-    Mockito.`when`(this.bookmarkService.count())
-        .thenReturn(Mono.just(20))
-    this.webTestClient
-        .get()
-        .uri("$root/count")
-        .headers { headers: HttpHeaders ->
-          headers.setBasicAuth(TestConfig.USER, TestConfig.PW)
-        }
-        .exchange()
-        .expectBody().jsonPath(".count").isEqualTo(20)
-
-  }
-*/
-
   @Test
   fun update() {
     Mockito.`when`(this.bookmarkService.update(this.bookmarkId, this.href, this.description, this.tags))
@@ -222,9 +205,6 @@ class TestConfig {
         username = "orders"
         url = " r2dbc:postgres://localhost/ttd ".trim()
       }
-
-//  @Bean
-//  fun r2dcTransactionManager(cf: ConnectionFactory) = R2dbcTransactionManager(cf)
 
   @Bean
   fun connectionFactory(r2dbcProperties: R2dbcProperties) = ConnectionFactoryBuilder
