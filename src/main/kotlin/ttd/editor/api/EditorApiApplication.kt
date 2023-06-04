@@ -21,6 +21,6 @@ class EditorApiApplication {
 }
 
 fun main(args: Array<String>) {
-    System.getenv().forEach { (k, _) -> println(k) }
+    System.getenv().forEach { (k, v) -> println("${k}=${v}" ) }
     runApplication<EditorApiApplication>(*args)
 }
